@@ -1,0 +1,36 @@
+# Deploy do conversaopeso
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conversaopeso
+  labels:
+    app: conversaopeso
+spec:
+  selector:
+    matchLabels:
+      app: conversaopeso
+  template:
+    metadata:
+      labels:
+        app: conversaopeso
+    spec:
+      containers:
+      - name: conversaopeso
+        image: edsontanaka/conversao-peso:2
+        ports:
+          - containerPort: 80
+
+---
+# Service do conversaopeso
+apiVersion: v1
+kind: Service
+metadata:
+  name: conversaopeso
+spec:
+  selector:
+    app: conversaopeso
+  ports:
+    - port: 80
+      protocol: TCP
+      nodePort: 30001
+  type: NodePort
